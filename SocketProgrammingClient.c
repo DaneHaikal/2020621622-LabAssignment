@@ -30,7 +30,7 @@ int main(int argc , char *argv[])
 	puts("Connected \n");
 
 	//Send some data
-	message = "connect";
+	message = "i want to connect to you";
 	if( send(socket_desc , message , strlen(message) , 0) < 0)
 	{
 		puts("Send failed");
