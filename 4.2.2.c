@@ -8,7 +8,7 @@ int main(int argc , char *argv[])
 {
 	int socket_desc , new_socket , c;
 	struct sockaddr_in server , client;
-	char *message;
+	char *message, client_reply[2000];
 	
 	//Create socket
 	socket_desc = socket(AF_INET , SOCK_STREAM , 0);
@@ -39,12 +39,17 @@ int main(int argc , char *argv[])
 	while( (new_socket = accept(socket_desc, (struct sockaddr *)&client, (socklen_t*)&c)) )
 	{
 		puts("Connection accepted");
-		
+
+		if (recv(new_socket, client_reply, 2000, 0) < 0)
+		{
+			puts("recv failed");
+		}
+		puts(client_reply);
+
 		//Reply to the client
 		message = "Hello Client , I have received your connection. But I have to go now, bye\n";
 		write(new_socket , message , strlen(message));
 	}
-	
 	if (new_socket<0)
 	{
 		perror("accept failed");
